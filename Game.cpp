@@ -37,6 +37,7 @@ void Game::init(const char* title,int xpos,int ypos, int width, int height, bool
 
   isRunning = true;
   stage = new Stage();
+  block = new Block();
   }
   else{
     isRunning = false;
@@ -45,6 +46,7 @@ void Game::init(const char* title,int xpos,int ypos, int width, int height, bool
 }
 
 void Game::handleEvents(){
+  std::cout << "handle events" << std::endl;
   SDL_Event event;
   SDL_PollEvent(&event);
   switch (event.type){
@@ -76,6 +78,7 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
+  std::cout << "Game::update()" << std::endl;
   //check if block is falling or stopped
   if(block -> Dead()){
     //change grid color if occupied
@@ -94,6 +97,7 @@ void Game::update(){
 }
 
 void Game::render(){
+  std::cout << "Game::render()" << std::endl;
   SDL_RenderClear(renderer);
   //render copy block
   block -> render_block();
@@ -104,6 +108,7 @@ void Game::render(){
 }
 
 void Game::clean(){
+  std::cout << "Game::clean()" << std::endl;
   SDL_DestroyWindow(window);
   SDL_DestroyRenderer(renderer);
   SDL_Quit();

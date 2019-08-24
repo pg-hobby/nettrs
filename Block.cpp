@@ -1,15 +1,37 @@
 #include "Block.hpp"
 #include "TextureManager.hpp"
 
-Block::Block(){}
+#include <iostream>
 
-Block::~Block(){}
+Block::Block(){
+  std::cout << "Block()" << std::endl;
+}
 
-void Block::move_block_right(){}
-void Block::move_block_left(){}
-void Block::move_block_downfast(){}
-void Block::rotate_block(){}
+Block::~Block(){
+  std::cout << "~Block()" << std::endl;
+}
 
-void Block::render_block(){}
+void Block::move_block_right(){
+
+  std::cout << "move to right" << std::endl;
+
+}
+void Block::move_block_left(){
+    
+  std::cout << "move to left" << std::endl;
+}
+void Block::move_block_downfast(){
+  
+  std::cout << "move to down" << std::endl;
+
+}
+void Block::rotate_block(){
+
+  std::cout << "rotate" << std::endl;
+}
+
+void Block::render_block(){
+  std::cout << "render block" << std::endl;
+}
 
 

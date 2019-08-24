@@ -5,7 +5,7 @@
 #define WIN_HEIGHT STAGE_HEIGHT
 
 //stage configure 
-#define STAGE_HEIGHT  1000
+#define STAGE_HEIGHT  500
 #define STAGE_WIDTH   500
 #define STAGE_GRAVITY 50
 
