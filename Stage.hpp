@@ -15,7 +15,8 @@ class Stage{
     void move_stagecolor_down(); 
     bool check_row(int row);
     void update_grid_status(int x, int y);
-    void copy_block_color(Block* block);
+    void copy_block_color(Block *block);
+    bool get_grid_status(int x,int y);
 
   private:
 

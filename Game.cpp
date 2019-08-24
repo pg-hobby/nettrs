@@ -2,12 +2,6 @@
 #include "Block.hpp"
 #include "Stage.hpp"
 
-/***************      SDL2 備忘録      **********************************/
-//SDL_Texture* playerTex;
-//SDL_Rect*    srcR, destR;
-//playerTex = TextureManager::LoadTexture("/home/haroon/work/net_tetris/Tetris_in_cpp/test.png",renderer); 
-/************************************************************************/
-
 Block* block = nullptr;
 Stage* stage = nullptr;
 
@@ -55,21 +49,29 @@ void Game::handleEvents(){
       break;
     case SDL_KEYDOWN:
       switch (event.key.keysym.sym){
-        case SDLK_RIGHT:
+        case SDLK_RIGHT:{
           block -> move_block_right();//move block to right
           break;
-        case SDLK_LEFT:
+          }
+        case SDLK_LEFT:{
           block -> move_block_left();//move block to left
           break;
-        case SDLK_DOWN:
-          block -> move_block_downfast();// move block down fast
+          }
+        case SDLK_DOWN:{
+          int x = block -> get_block_x();
+          int y = block -> get_block_y();
+          bool status = stage->get_grid_status(x,y+BLOCK_HEIGHT);
+          block -> move_block_downfast(status);// move block down fast
           break;
-        case SDLK_SPACE:
+          }
+        case SDLK_SPACE:{
           block -> rotate_block();// rotate block
           break;
-        default:
+          }
+        default:{
           //do nothing
           break;
+          }
       }
     default : 
       // do nothing
@@ -78,7 +80,6 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
-  //std::cout << "Game::update()" << std::endl;
   //check if block is falling or stopped
   if(block -> Dead()){
     //change grid color if occupied

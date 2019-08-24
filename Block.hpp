@@ -16,7 +16,7 @@ class Block{
 
     void move_block_right();
     void move_block_left();
-    void move_block_downfast();
+    void move_block_downfast(bool is_occupied);
     void rotate_block(); 
     bool Dead(){return isDead;} 
     void render_block(SDL_Renderer *ren);

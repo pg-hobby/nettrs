@@ -17,13 +17,11 @@ Stage::~Stage(){
 
 void Stage::render_stage(SDL_Renderer *ren){
   int i,j = 0;
-  //std::cout << STAGE_WIDTH/BLOCK_WIDTH << " "  << STAGE_HEIGHT/BLOCK_HEIGHT << std::endl; 
   for(i=0;i<STAGE_WIDTH;i=i+BLOCK_WIDTH){
     for(j=0;j<STAGE_HEIGHT;j=j+BLOCK_HEIGHT){
       if(grid[i][j])SDL_RenderCopy(ren,grid_color[i][j],NULL,&grid_block[i][j]);
     }
   }
-  //std::cout << "render stage" <<  std::endl;
 }
 
 void Stage::move_stagecolor_down(){
@@ -42,12 +40,15 @@ void Stage::update_grid_status(int x, int y){
 }
 
 void Stage::copy_block_color(Block* block){
-  std::cout << "copy block color" << std::endl;
   int x = block -> get_block_x();
   int y = block -> get_block_y();
   if(grid[x][y]){
     grid_color[x][y] = block->get_block_texture();
     grid_block[x][y] = block->get_block_Rect();
   }
+}
+
+bool Stage::get_grid_status(int x, int y){
+  return grid[x][y];
 }
 
