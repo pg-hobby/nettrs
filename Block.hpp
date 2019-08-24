@@ -11,21 +11,23 @@
 class Block{
 
   public:
-    Block();
+    Block(SDL_Renderer *ren);
     ~Block();
 
     void move_block_right();
     void move_block_left();
     void move_block_downfast();
-    void rotate_block();
-    
+    void rotate_block(); 
     bool Dead(){return isDead;} 
-    void render_block();
+    void render_block(SDL_Renderer *ren);
+    int  get_block_x();
+    int  get_block_y();
+    SDL_Texture* get_block_texture(){return block_texture;}
+    SDL_Rect get_block_Rect(){return block;}
 
   private:
-    int pos_x = 30;
-    int pos_y = 0;
     bool isDead = false;
+    SDL_Rect block;
     SDL_Texture* block_texture; 
 
 };

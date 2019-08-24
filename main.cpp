@@ -13,10 +13,8 @@ int main(int argc, const char * argv[]){
   int frameTime;
 
   game =  new Game();
-  std::cout << WIN_WIDTH << "," << WIN_HEIGHT << std::endl;
   game -> init(WIN_TITLE,SDL_WINDOWPOS_CENTERED,
       SDL_WINDOWPOS_CENTERED,WIN_WIDTH,WIN_HEIGHT,false);
-  std::cout << "Game started" << std::endl; 
   while(game -> runnig()){
     frameStart = SDL_GetTicks();
     //handle any user inpput

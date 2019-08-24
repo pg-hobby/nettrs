@@ -15,7 +15,7 @@ Game::Game(){}
 Game::~Game(){}
 
 void Game::init(const char* title,int xpos,int ypos, int width, int height, bool fullscreen){
-  
+
   int flags = 0;
   if(fullscreen){
     flags = SDL_WINDOW_FULLSCREEN;
@@ -24,20 +24,20 @@ void Game::init(const char* title,int xpos,int ypos, int width, int height, bool
   if(SDL_Init(SDL_INIT_EVERYTHING) == 0){
     std::cout << "Subsystem initalized" << std::endl;
     window = SDL_CreateWindow(title,xpos,ypos,width,height,flags);
-    
+
     if(window){
       std::cout << "Window Created " << std::endl;
     }
-    
+
     renderer = SDL_CreateRenderer(window, -1, 0);
     if(renderer){
       SDL_SetRenderDrawColor(renderer,255,255,255,255);
       std::cout << "Renderer Created " << std::endl;
     }
 
-  isRunning = true;
-  stage = new Stage();
-  block = new Block();
+    isRunning = true;
+    stage = new Stage();
+    block = new Block(renderer);
   }
   else{
     isRunning = false;
@@ -46,7 +46,7 @@ void Game::init(const char* title,int xpos,int ypos, int width, int height, bool
 }
 
 void Game::handleEvents(){
-  std::cout << "handle events" << std::endl;
+  //std::cout << "handle events" << std::endl;
   SDL_Event event;
   SDL_PollEvent(&event);
   switch (event.type){
@@ -78,31 +78,32 @@ void Game::handleEvents(){
 }
 
 void Game::update(){
-  std::cout << "Game::update()" << std::endl;
+  //std::cout << "Game::update()" << std::endl;
   //check if block is falling or stopped
   if(block -> Dead()){
     //change grid color if occupied
-    stage -> copy_block_color();
-    block -> ~Block(); //destroy block instance 
+    stage -> update_grid_status(block->get_block_x(),block->get_block_y());
+    stage -> copy_block_color(block);
+    delete block; //destroy block instance 
     //check if row is occupied
-    int row; 
-    while(stage -> check_row(row = STAGE_HEIGHT)){ 
-      //move stage color to downwards
-      stage -> move_stagecolor_down();
-      row = row - BLOCK_WIDTH;
-    } 
+    //int row; 
+    // while(stage -> check_row(row = STAGE_HEIGHT)){ 
+    //   //move stage color to downwards
+    //   stage -> move_stagecolor_down();
+    //   row = row - BLOCK_WIDTH;
+    // } 
     // make new block to fall
-    block = new Block();
-   }
+    block = new Block(renderer);
+  }
 }
 
 void Game::render(){
-  std::cout << "Game::render()" << std::endl;
+  //std::cout << "Game::render()" << std::endl;
   SDL_RenderClear(renderer);
   //render copy block
-  block -> render_block();
+  //block -> render_block(renderer);
   //render copy stage
-  stage -> render_stage();
+  stage -> render_stage(renderer);
   //SDL_RenderCopy(renderer,playerTex,NULL,&destR);
   SDL_RenderPresent(renderer);
 }
