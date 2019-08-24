@@ -9,15 +9,6 @@ Stage::Stage(){
   memset(grid,0,sizeof(grid));
   memset(grid_color,0,sizeof(grid_color));
   memset(grid_block,0,sizeof(grid_block));
-  int i,j = 0;
-  //std::cout << STAGE_WIDTH/BLOCK_WIDTH << " "  << STAGE_HEIGHT/BLOCK_HEIGHT << std::endl; 
-  for(i=0;i<STAGE_WIDTH;i=i+BLOCK_WIDTH){
-    for(j=0;j<STAGE_HEIGHT;j=j+BLOCK_HEIGHT){
-      if(grid[i][j])std::cout << i <<" "<< j << " has non zero value"<<std::endl;
-  //    std::cout << i << "," << j << std::endl;
-  //    std::cout << grid[i][j] << std::endl;
-    }
-  }
 }
 
 Stage::~Stage(){
@@ -29,12 +20,7 @@ void Stage::render_stage(SDL_Renderer *ren){
   //std::cout << STAGE_WIDTH/BLOCK_WIDTH << " "  << STAGE_HEIGHT/BLOCK_HEIGHT << std::endl; 
   for(i=0;i<STAGE_WIDTH;i=i+BLOCK_WIDTH){
     for(j=0;j<STAGE_HEIGHT;j=j+BLOCK_HEIGHT){
-      if(grid[i][j]){
-        std::cout << i << " "  << j << " Is TRUE : " << grid[i][j] << std::endl; 
-        std::cout << "grid_color = " << grid_color[i][j] << std::endl;
-        std::cout << "grid_block = " << &grid_block[i][j] << std::endl;
-        SDL_RenderCopy(ren,grid_color[i][j],NULL,&grid_block[i][j]);
-      }
+      if(grid[i][j])SDL_RenderCopy(ren,grid_color[i][j],NULL,&grid_block[i][j]);
     }
   }
   //std::cout << "render stage" <<  std::endl;

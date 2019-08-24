@@ -101,10 +101,9 @@ void Game::render(){
   //std::cout << "Game::render()" << std::endl;
   SDL_RenderClear(renderer);
   //render copy block
-  //block -> render_block(renderer);
+  block -> render_block(renderer);
   //render copy stage
   stage -> render_stage(renderer);
-  //SDL_RenderCopy(renderer,playerTex,NULL,&destR);
   SDL_RenderPresent(renderer);
 }
 

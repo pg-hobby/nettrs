@@ -19,7 +19,7 @@ class Stage{
 
   private:
 
-    bool grid[WIN_WIDTH/BLOCK_WIDTH][WIN_HEIGHT/BLOCK_HEIGHT]; //bool 1 -> occupied , 0 -> free
-    SDL_Texture* grid_color[WIN_WIDTH/BLOCK_WIDTH][WIN_HEIGHT/BLOCK_HEIGHT]; 
-    SDL_Rect grid_block[WIN_WIDTH/BLOCK_WIDTH][WIN_HEIGHT/BLOCK_HEIGHT];
+    bool grid[WIN_WIDTH][WIN_HEIGHT]; //bool 1 -> occupied , 0 -> free
+    SDL_Texture* grid_color[WIN_WIDTH][WIN_HEIGHT]; 
+    SDL_Rect grid_block[WIN_WIDTH][WIN_HEIGHT];
 };
