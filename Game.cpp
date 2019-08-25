@@ -87,19 +87,18 @@ void Game::update(){
     stage -> copy_block_color(block);
     delete block; //destroy block instance 
     //check if row is occupied
-    //int row; 
-    // while(stage -> check_row(row = STAGE_HEIGHT)){ 
-    //   //move stage color to downwards
-    //   stage -> move_stagecolor_down();
-    //   row = row - BLOCK_WIDTH;
-    // } 
+    int row = STAGE_HEIGHT; 
+    while(stage -> check_row(row)){ 
+       //move stage color to downwards
+       stage -> move_stagecolor_down();
+       row = row - BLOCK_HEIGHT;
+     } 
     // make new block to fall
     block = new Block(renderer);
   }
 }
 
 void Game::render(){
-  //std::cout << "Game::render()" << std::endl;
   SDL_RenderClear(renderer);
   //render copy block
   block -> render_block(renderer);

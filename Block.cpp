@@ -5,9 +5,7 @@
 #include <iostream>
 
 Block::Block(SDL_Renderer *ren){
-  std::cout << "Block()" << std::endl;
   block_texture = TextureManager::LoadTexture(TEXTURE_PATH,ren);
-  std::cout << "Texture loaded" << std::endl;
   block.h = BLOCK_HEIGHT;   
   block.w = BLOCK_WIDTH;   
   block.x = STAGE_WIDTH/2-BLOCK_WIDTH;   

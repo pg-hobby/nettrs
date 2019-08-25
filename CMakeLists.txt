@@ -11,4 +11,4 @@ add_executable(Tetris
 
 target_link_libraries(Tetris SDL2 SDL2_image)
 
-add_definitions("-Wall")
+add_definitions("-Wall -g3")

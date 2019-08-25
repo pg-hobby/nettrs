@@ -25,17 +25,27 @@ void Stage::render_stage(SDL_Renderer *ren){
 }
 
 void Stage::move_stagecolor_down(){
-  std::cout << "move stage color down" << std::endl;
+  int x=0;
+  int y=0;
+  for(y=STAGE_HEIGHT-BLOCK_HEIGHT;y>=0;y=y-BLOCK_HEIGHT){
+    for(x=0;x<STAGE_WIDTH;x=x+BLOCK_WIDTH){
+      grid[x][y]       = grid[x][y-BLOCK_HEIGHT];
+      grid_color[x][y] = grid_color[x][y-BLOCK_HEIGHT];
+    }
+  }
 }
 
 bool Stage::check_row(int row){
-  std::cout << "check row()" << std::endl;
+  int i=0;
+  for(i=0;i<STAGE_WIDTH;i=i+BLOCK_WIDTH){
+    if(!grid[i][row-BLOCK_HEIGHT]){  
+      return false;
+    } 
+  } 
   return true;
 }
 
 void Stage::update_grid_status(int x, int y){
-  std::cout << "update grid status " << std::endl;
-  std::cout << x << y << std::endl;
   grid[x][y] = true;
 }
 
