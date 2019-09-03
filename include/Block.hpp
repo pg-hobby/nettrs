@@ -3,10 +3,21 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "TextureManager.hpp"
+#include <iostream>
+#include <string>
 
 #define BLOCK_HEIGHT 50
 #define BLOCK_WIDTH  50
 
+#ifdef DEBUG
+#define debug(str)                                \
+  std::cout << "(" << __FILE__ << ":"             \
+            << std::to_string(__LINE__) << "): "  \
+            << __func__ << ":"                    \
+            << str << std::endl;
+#else
+#define debug(str) do { } while (0)
+#endif
 
 class Block{
 

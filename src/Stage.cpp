@@ -5,14 +5,14 @@
 #include <iostream> 
 
 Stage::Stage(){
-  std::cout << "Stage () " << std::endl;
+  debug("Stage () ");
   memset(grid,0,sizeof(grid));
   memset(grid_color,0,sizeof(grid_color));
   memset(grid_block,0,sizeof(grid_block));
 }
 
 Stage::~Stage(){
-  std::cout << "~Stage() " << std::endl;
+ debug("~Stage() ");
 }
 
 void Stage::render_stage(SDL_Renderer *ren){

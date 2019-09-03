@@ -2,8 +2,6 @@
 #include "Stage.hpp"
 #include "TextureManager.hpp"
 
-#include <iostream>
-
 Block::Block(SDL_Renderer *ren){
   block_texture = TextureManager::LoadTexture(TEXTURE_PATH,ren);
   block.h = BLOCK_HEIGHT;   
@@ -25,7 +23,7 @@ void Block::move_block_left(){
   if(block.x < 0) block.x = 0;
 }
 void Block::move_block_downfast(bool status){
-  if(status){std::cout<<"is occupied"<<std::endl;isDead=true; return;}
+  if(status){debug("is occupied");isDead=true; return;}
   block.y = block.y + BLOCK_HEIGHT;
   if(block.y >= STAGE_HEIGHT - BLOCK_HEIGHT){
     block.y = STAGE_HEIGHT - BLOCK_HEIGHT;
@@ -35,7 +33,7 @@ void Block::move_block_downfast(bool status){
 
 
 void Block::rotate_block(){
-  std::cout << "rotate" << std::endl;
+  debug("rotate");
 }
 
 int Block::get_block_x(){

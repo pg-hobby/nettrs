@@ -1,8 +1,11 @@
 #!/bin/bash -eu
 
-if [ -e ./build ]; then
-    rm -rf ./build
+if [ ! -d build ]; then
+  mkdir build
+  touch build/.gitkeep
+else
+  rm -rf build/*
 fi
 
-mkdir ./build && cd $_
-cmake .. && make
+cd build
+cmake -DCMAKE_BUILD_TYPE=Debug .. && make
