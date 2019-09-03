@@ -4,7 +4,7 @@
 #define WIN_WIDTH STAGE_WIDTH
 #define WIN_HEIGHT STAGE_HEIGHT
 
-//stage configure 
+//stage configure
 #define STAGE_HEIGHT  500
 #define STAGE_WIDTH   500
 #define STAGE_GRAVITY 50
@@ -15,7 +15,7 @@
 
 //Game FPS
 #define FPS 60
-#define FRAME_DELAY 1000/FPS
+#define FRAME_DELAY (1000 / FPS)
 
 //color configure
 #define WHITE_INIT_CODE {255, 255, 255, 255}
