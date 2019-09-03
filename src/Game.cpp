@@ -41,37 +41,45 @@ void Game::handleEvents() {
   SDL_Event event;
   SDL_PollEvent(&event);
   switch (event.type){
-    case SDL_QUIT:
+    case SDL_QUIT: {
       isRunning = false;
       break;
-    case SDL_KEYDOWN:
+    }
+    case SDL_KEYDOWN: {
       switch (event.key.keysym.sym) {
         //move block to right
-        case SDLK_RIGHT:
+        case SDLK_RIGHT: {
           block -> move_block_right();
           break;
+        }
         //move block to left
-        case SDLK_LEFT:
+        case SDLK_LEFT: {
           block -> move_block_left();
           break;
+        }
         //move block down fast
-        case SDLK_DOWN:
+        case SDLK_DOWN: {
           int x = block -> get_block_x();
           int y = block -> get_block_y();
           bool status = stage -> get_grid_status(x, y + BLOCK_HEIGHT);
           block -> move_block_downfast(status);
           break;
+        }
         // rotate block
-        case SDLK_SPACE:
+        case SDLK_SPACE: {
           block -> rotate_block();
           break;
+        }
         //do nothing
-        default:
+        default: {
           break;
+        }
       }
-    default :
+    }
+    default : {
       // do nothing
       break;
+    }
   }
 }
 
