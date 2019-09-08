@@ -28,4 +28,4 @@
 #define COLOR5_INIT_CODE {0,   255, 255, 255}
 #define COLOR6_INIT_CODE {0,   128, 255, 255}
 
-#define TEXTURE_PATH "resources/test.png"
+#define TEXTURE_PATH "resources/block_red.bmp"
