@@ -61,9 +61,12 @@ void Game::handleEvents() {
         }
         //move block down fast
         case SDLK_DOWN: {
-          int x = block -> get_block_x();
-          int y = block -> get_block_y();
-          bool status = stage -> get_grid_status(x, y + BLOCK_HEIGHT);
+          bool status = true;
+          for (int i = 0; i < BLOCK_COUNT && status; i++) {
+            int x = block -> get_block_x(i);
+            int y = block -> get_block_y(i);
+            status = stage -> get_grid_status(x, y + BLOCK_HEIGHT);
+          }
           block -> move_block_downfast(status);
           break;
         }
@@ -86,12 +89,15 @@ void Game::handleEvents() {
 }
 
 void Game::update(){
+  Btype type = get_blocktype();
   //check if block is falling or stopped
   if (block -> Dead()) {
     //change grid color if occupied
-    stage -> update_grid_status(block -> get_block_x(),
-                                block -> get_block_y());
-    stage -> copy_block_color(block);
+    for (int i = 0; i < BLOCK_COUNT; i++) {
+      stage -> update_grid_status(block -> get_block_x(i),
+                                  block -> get_block_y(i));
+      stage -> copy_block_color(block);
+    }
     delete block; //destroy block instance
     //check if row is occupied
     int row = STAGE_HEIGHT;

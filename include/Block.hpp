@@ -8,6 +8,8 @@
 
 #define BLOCK_HEIGHT 50
 #define BLOCK_WIDTH  50
+#define BLOCK_COUNT   4
+#define BLOCK_PATHSIZE 31
 
 #ifdef DEBUG
 #define debug(str)                                \
@@ -32,6 +34,17 @@ enum Btype{
   BLOCK_MAX,
 };
 
+struct point {
+  unsigned int x;
+  unsigned int y;
+};
+
+struct mino {
+  char name;
+  char path[BLOCK_PATHSIZE];
+  point p[BLOCK_COUNT];
+};
+
 class Block{
 
   public:
@@ -46,18 +59,20 @@ class Block{
       return isDead;
     }
     void render_block(SDL_Renderer *ren);
-    int get_block_x();
-    int get_block_y();
+    int get_block_x(int i);
+    int get_block_y(int i);
     SDL_Texture *get_block_texture() {
       return block_texture;
     }
-    SDL_Rect get_block_Rect() {
-      return block;
+    SDL_Rect get_block_Rect(int i) {
+      return blocks[i];
     }
 
   private:
     bool isDead = false;
-    SDL_Rect block;
+    SDL_Rect blocks[BLOCK_COUNT];
     SDL_Texture *block_texture;
 
+    void init_block(int x, int y, int w, int h);
+    void set_block(int x, int y, int w, int h, Btype type, SDL_Renderer *ren);
 };

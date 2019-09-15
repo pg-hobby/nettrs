@@ -51,11 +51,13 @@ void Stage::update_grid_status(int x, int y) {
 }
 
 void Stage::copy_block_color(Block *block) {
-  int x = block -> get_block_x();
-  int y = block -> get_block_y();
-  if (grid[x][y]) {
-    grid_color[x][y] = block -> get_block_texture();
-    grid_block[x][y] = block -> get_block_Rect();
+  for (int i = 0; i < BLOCK_COUNT; i++) {
+    int x = block -> get_block_x(i);
+    int y = block -> get_block_y(i);
+    if (grid[x][y]) {
+      grid_color[x][y] = block -> get_block_texture();
+      grid_block[x][y] = block -> get_block_Rect(i);
+    }
   }
 }
 

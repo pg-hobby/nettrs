@@ -2,26 +2,60 @@
 #include "Stage.hpp"
 #include "TextureManager.hpp"
 
-Block::Block(SDL_Renderer *ren) {
-  block_texture = TextureManager::LoadTexture(TEXTURE_PATH,ren);
-  block.h = BLOCK_HEIGHT;
-  block.w = BLOCK_WIDTH;
-  block.x = (STAGE_WIDTH / 2) - BLOCK_WIDTH;
-  block.y = 0;
+/*
+ * --------------------------------------------------------------
+ * BLOCK:I  BLOCK:O  BLOCK:S  BLOCK:Z  BLOCK:J  BLOCK:L  BLOCK:T
+ * --------------------------------------------------------------
+ * □■□□ □□□□ □■■□ ■■□□ □■□□ □■□□ □■□□
+ * □■□□ □■■□ ■■□□ □■■□ □■□□ □■□□ ■■■□
+ * □■□□ □■■□ □□□□ □□□□ ■■□□ □■■□ □□□□
+ * □■□□ □□□□ □□□□ □□□□ □□□□ □□□□ □□□□
+ *
+ * --------------------------------------------------------------
+ * BLOCK:i  BLOCK:l
+ * --------------------------------------------------------------
+ * □■□□ □□□□
+ * □■□□ □■□□
+ * □■□□ □■■□
+ * □□□□ □□□□
+ */
+static const mino blockinfo[] = {
+  {'I', TEXTURE_LIGHTBLUE_PATH,  {{1, 0}, {1, 1}, {1, 2}, {1, 3}}},
+  {'O', TEXTURE_YELLOW_PATH,     {{1, 1}, {2, 1}, {1, 2}, {2, 2}}},
+  {'S', TEXTURE_GREEN_PATH,      {{1, 0}, {2, 0}, {0, 1}, {1, 1}}},
+  {'Z', TEXTURE_RED_PATH,        {{0, 0}, {1, 0}, {1, 1}, {2, 1}}},
+  {'J', TEXTURE_BLUE_PATH,       {{1, 0}, {1, 1}, {0, 2}, {1, 2}}},
+  {'L', TEXTURE_ORANGE_PATH,     {{1, 0}, {1, 1}, {1, 2}, {2, 2}}},
+  {'T', TEXTURE_PURPLE_PATH,     {{1, 0}, {0, 1}, {1, 1}, {2, 1}}},
+  {'i', TEXTURE_LIGHTGREEN_PATH, {{1, 0}, {1, 1}, {1, 2}, {1, 2}}},
+  {'l', TEXTURE_PINK_PATH,       {{1, 1}, {1, 2}, {2, 2}, {2, 2}}},
+};
+
+Block::Block(Btype btype, SDL_Renderer *ren) {
+  set_block(((STAGE_WIDTH / 2) - BLOCK_WIDTH), /* x */
+              0,                               /* y */
+              BLOCK_WIDTH,                     /* width */
+              BLOCK_HEIGHT,                    /* height */
+              btype,                           /* block type */
+              ren);
 }
 
 Block::~Block() {
 }
 
 void Block::move_block_right() {
-  block.x = block.x + BLOCK_WIDTH;
-  if (block.x >= STAGE_WIDTH)
-    block.x = STAGE_WIDTH - BLOCK_WIDTH;
+  for (int i = 0; i < BLOCK_COUNT; i++) {
+    blocks[i].x = blocks[i].x + BLOCK_WIDTH;
+    if (blocks[i].x >= STAGE_WIDTH)
+      blocks[i].x = STAGE_WIDTH - BLOCK_WIDTH;
+  }
 }
 void Block::move_block_left() {
-  block.x = block.x - BLOCK_WIDTH;
-  if (block.x < 0)
-    block.x = 0;
+  for (int i = 0; i < BLOCK_COUNT; i++) {
+    blocks[i].x = blocks[i].x - BLOCK_WIDTH;
+    if (blocks[i].x < 0)
+      blocks[i].x = 0;
+  }
 }
 void Block::move_block_downfast(bool status) {
   if (status) {
@@ -29,10 +63,12 @@ void Block::move_block_downfast(bool status) {
     isDead=true;
     return;
   }
-  block.y = block.y + BLOCK_HEIGHT;
-  if (block.y >= (STAGE_HEIGHT - BLOCK_HEIGHT)) {
-    block.y = STAGE_HEIGHT - BLOCK_HEIGHT;
-    isDead  = true;
+  for (int i = 0; i < BLOCK_COUNT ; i++) {
+    blocks[i].y = blocks[i].y + BLOCK_HEIGHT;
+    if (blocks[i].y >= (STAGE_HEIGHT - BLOCK_HEIGHT)) {
+      blocks[i].y = STAGE_HEIGHT - BLOCK_HEIGHT;
+      isDead  = true;
+    }
   }
 }
 
@@ -40,13 +76,33 @@ void Block::rotate_block() {
   debug("rotate");
 }
 
-int Block::get_block_x() {
-  return block.x;
+int Block::get_block_x(int i) {
+  return blocks[i].x;
 }
-int Block::get_block_y() {
-  return block.y;
-}
-void Block::render_block(SDL_Renderer *ren){
-  SDL_RenderCopy(ren, block_texture, NULL, &block);
+int Block::get_block_y(int i) {
+  return blocks[i].y;
 }
 
+void Block::render_block(SDL_Renderer *ren){
+  for (int i = 0; i < BLOCK_COUNT; i++)
+    SDL_RenderCopy(ren, block_texture, NULL, &blocks[i]);
+}
+
+void Block::init_block(int x, int y, int w, int h){
+  for (int i = 0; i < BLOCK_COUNT; i++) {
+    blocks[i].x = x;
+    blocks[i].y = y;
+    blocks[i].w = w;
+    blocks[i].h = h;
+  }
+}
+
+void Block::set_block(int x, int y, int w, int h, Btype type, SDL_Renderer *ren){
+  init_block(x, y, w, h);
+  block_texture = TextureManager::LoadTexture(blockinfo[type].path, ren);
+
+  for(int i = 0; i < BLOCK_COUNT; i++) {
+    blocks[i].x += blockinfo[type].p[i].x * blocks[i].w;
+    blocks[i].y += blockinfo[type].p[i].y * blocks[i].h;
+  }
+}
