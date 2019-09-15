@@ -4,6 +4,9 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
+#include <stack>
+#include <algorithm>
+#include "Block.hpp"
 
 #ifdef DEBUG
 #define debug_game(str)                           \
@@ -31,6 +34,7 @@ class Game{
     void render();
     void clean();
 
+    Btype get_blocktype();
     bool runnig() {
       return isRunning;
     }

@@ -19,10 +19,23 @@
 #define debug(str) do { } while (0)
 #endif
 
+enum Btype{
+  BLOCK_I,
+  BLOCK_J,
+  BLOCK_L,
+  BLOCK_O,
+  BLOCK_Z,
+  BLOCK_S,
+  BLOCK_T,
+  BLOCK_SI,
+  BLOCK_SL,
+  BLOCK_MAX,
+};
+
 class Block{
 
   public:
-    Block(SDL_Renderer *ren);
+    Block(Btype btype, SDL_Renderer *ren);
     ~Block();
 
     void move_block_right();

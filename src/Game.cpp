@@ -4,6 +4,7 @@
 
 Block *block = nullptr;
 Stage *stage = nullptr;
+std::stack<Btype> blocktype;
 
 Game::Game() {}
 Game::~Game() {}
@@ -11,6 +12,7 @@ Game::~Game() {}
 void Game::init(const char *title, int xpos, int ypos, int width, int height,
                 bool fullscreen) {
   int flags = 0;
+  Btype type = get_blocktype();
   if (fullscreen)
     flags = SDL_WINDOW_FULLSCREEN;
 
@@ -30,7 +32,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height,
 
     isRunning = true;
     stage = new Stage();
-    block = new Block(renderer);
+    block = new Block(type, renderer);
   }
   else {
     isRunning = false;
@@ -99,7 +101,7 @@ void Game::update(){
        row = row - BLOCK_HEIGHT;
      }
     // make new block to fall
-    block = new Block(renderer);
+    block = new Block(type, renderer);
   }
 }
 
@@ -120,4 +122,25 @@ void Game::clean() {
   debug_game("Game Ended ....");
 }
 
-
+Btype Game::get_blocktype() {
+  Btype btmp;
+  if (!blocktype.size()) {
+    Btype tmp[]{
+      BLOCK_I,
+      BLOCK_J,
+      BLOCK_L,
+      BLOCK_O,
+      BLOCK_Z,
+      BLOCK_S,
+      BLOCK_T,
+      BLOCK_SI,
+      BLOCK_SL,
+    };
+    std::random_shuffle(tmp, tmp + BLOCK_MAX);
+    for(int i = 0; i < BLOCK_MAX; i++)
+      blocktype.push(tmp[i]);
+  }
+  btmp = blocktype.top();
+  blocktype.pop();
+  return btmp;
+}

@@ -28,4 +28,14 @@
 #define COLOR5_INIT_CODE {0,   255, 255, 255}
 #define COLOR6_INIT_CODE {0,   128, 255, 255}
 
-#define TEXTURE_PATH "resources/block_red.bmp"
+// texture path
+#define TEXTURE_BROWN_PATH      "resources/block_brown.bmp"
+#define TEXTURE_PINK_PATH       "resources/block_pink.bmp"
+#define TEXTURE_RED_PATH        "resources/block_red.bmp"
+#define TEXTURE_ORANGE_PATH     "resources/block_orange.bmp"
+#define TEXTURE_YELLOW_PATH     "resources/block_yellow.bmp"
+#define TEXTURE_LIGHTGREEN_PATH "resources/block_lightgreen.bmp"
+#define TEXTURE_GREEN_PATH      "resources/block_green.bmp"
+#define TEXTURE_LIGHTBLUE_PATH  "resources/block_lightblue.bmp"
+#define TEXTURE_BLUE_PATH       "resources/block_blue.bmp"
+#define TEXTURE_PURPLE_PATH     "resources/block_purple.bmp"
