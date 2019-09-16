@@ -69,7 +69,7 @@ void Block::move_block_downfast(bool status) {
   }
   for (int i = 0; i < BLOCK_COUNT ; i++) {
     blocks[i].y = blocks[i].y + BLOCK_HEIGHT;
-    if (blocks[i].y >= (STAGE_HEIGHT - BLOCK_HEIGHT)) {
+    if (blocks[i].y > (STAGE_HEIGHT - BLOCK_HEIGHT)) {
       blocks[i].y = STAGE_HEIGHT - BLOCK_HEIGHT;
       isDead  = true;
     }
