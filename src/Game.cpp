@@ -61,8 +61,8 @@ void Game::handleEvents() {
         }
         //move block down fast
         case SDLK_DOWN: {
-          bool status = true;
-          for (int i = 0; i < BLOCK_COUNT && status; i++) {
+          bool status = false;
+          for (int i = 0; i < BLOCK_COUNT && !status; i++) {
             int x = block -> get_block_x(i);
             int y = block -> get_block_y(i);
             status = stage -> get_grid_status(x, y + BLOCK_HEIGHT);
