@@ -51,8 +51,8 @@ class Block{
     Block(Btype btype, SDL_Renderer *ren);
     ~Block();
 
-    void move_block_right();
-    void move_block_left();
+    void move_block_right(bool is_occupied);
+    void move_block_left(bool is_occupied);
     void move_block_downfast(bool is_occupied);
     void rotate_block();
     bool Dead() {

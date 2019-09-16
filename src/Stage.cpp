@@ -62,6 +62,8 @@ void Stage::copy_block_color(Block *block) {
 }
 
 bool Stage::get_grid_status(int x, int y) {
+  if (x < 0 || x >= STAGE_WIDTH) return true;
+  if (y < 0 || y >= STAGE_HEIGHT) return true;
   return grid[x][y];
 }
 

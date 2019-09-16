@@ -51,12 +51,24 @@ void Game::handleEvents() {
       switch (event.key.keysym.sym) {
         //move block to right
         case SDLK_RIGHT: {
-          block -> move_block_right();
+          bool status = false;
+          for (int i = 0; i < BLOCK_COUNT && !status; i++) {
+            int x = block -> get_block_x(i);
+            int y = block -> get_block_y(i);
+            status = stage -> get_grid_status(x + BLOCK_WIDTH, y);
+          }
+          block -> move_block_right(status);
           break;
         }
         //move block to left
         case SDLK_LEFT: {
-          block -> move_block_left();
+          bool status = false;
+          for (int i = 0; i < BLOCK_COUNT && !status; i++) {
+            int x = block -> get_block_x(i);
+            int y = block -> get_block_y(i);
+            status = stage -> get_grid_status(x - BLOCK_WIDTH, y);
+          }
+          block -> move_block_left(status);
           break;
         }
         //move block down fast

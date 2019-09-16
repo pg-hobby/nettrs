@@ -43,14 +43,18 @@ Block::Block(Btype btype, SDL_Renderer *ren) {
 Block::~Block() {
 }
 
-void Block::move_block_right() {
+void Block::move_block_right(bool status) {
+  if (status)
+    return;
   for (int i = 0; i < BLOCK_COUNT; i++) {
     blocks[i].x = blocks[i].x + BLOCK_WIDTH;
     if (blocks[i].x >= STAGE_WIDTH)
       blocks[i].x = STAGE_WIDTH - BLOCK_WIDTH;
   }
 }
-void Block::move_block_left() {
+void Block::move_block_left(bool status) {
+  if (status)
+    return;
   for (int i = 0; i < BLOCK_COUNT; i++) {
     blocks[i].x = blocks[i].x - BLOCK_WIDTH;
     if (blocks[i].x < 0)
