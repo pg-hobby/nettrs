@@ -101,7 +101,6 @@ void Game::handleEvents() {
 }
 
 void Game::update(){
-  Btype type = get_blocktype();
   //check if block is falling or stopped
   if (block -> Dead()) {
     //change grid color if occupied
@@ -119,6 +118,7 @@ void Game::update(){
        row = row - BLOCK_HEIGHT;
      }
     // make new block to fall
+    Btype type = get_blocktype();
     block = new Block(type, renderer);
   }
 }
