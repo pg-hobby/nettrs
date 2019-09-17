@@ -3,7 +3,7 @@
 #include "TextureManager.hpp"
 
 Block::Block(SDL_Renderer *ren) {
-  block_texture = TextureManager::LoadTexture(TEXTURE_PATH,ren);
+  block_texture = TextureManager::LoadTexture(TEXTURE_PATH, ren);
   block.h = BLOCK_HEIGHT;
   block.w = BLOCK_WIDTH;
   block.x = (STAGE_WIDTH / 2) - BLOCK_WIDTH;
@@ -26,7 +26,7 @@ void Block::move_block_left() {
 void Block::move_block_downfast(bool status) {
   if (status) {
     debug("is occupied");
-    isDead=true;
+    isDead = true;
     return;
   }
   block.y = block.y + BLOCK_HEIGHT;
