@@ -154,7 +154,9 @@ Btype Game::get_blocktype() {
       BLOCK_SI,
       BLOCK_SL,
     };
-    std::random_shuffle(tmp, tmp + BLOCK_MAX);
+    std::random_device seed_gen;
+    std::mt19937 engine(seed_gen());
+    std::shuffle(tmp, tmp + BLOCK_MAX, engine);
     for(int i = 0; i < BLOCK_MAX; i++)
       blocktype.push(tmp[i]);
   }

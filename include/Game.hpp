@@ -6,6 +6,7 @@
 #include <string>
 #include <stack>
 #include <algorithm>
+#include <random>
 #include "Block.hpp"
 
 #ifdef DEBUG
