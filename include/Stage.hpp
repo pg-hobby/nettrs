@@ -12,7 +12,7 @@ class Stage{
     Stage();
     ~Stage();
     void render_stage(SDL_Renderer *ren);
-    void move_stagecolor_down();
+    void move_stagecolor_down(int row);
     bool check_row(int row);
     void update_grid_status(int x, int y);
     void copy_block_color(Block *block);

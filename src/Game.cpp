@@ -134,12 +134,17 @@ void Game::update(){
     }
     delete block; //destroy block instance
     //check if row is occupied
-    int row = STAGE_HEIGHT;
-    while (stage -> check_row(row)) {
-       //move stage color to downwards
-       stage -> move_stagecolor_down();
-       row = row - BLOCK_HEIGHT;
-     }
+    int y = block -> get_block_y();
+    int radius = BLOCK_HEIGHT * (BLOCK_COUNT / 2);
+    int upper = std::max(0, y - radius);
+    int lower = std::min(STAGE_HEIGHT - BLOCK_HEIGHT, y + radius);
+    for (int row = lower; row >= upper; row -= BLOCK_HEIGHT) {
+      if (stage -> check_row(row)) {
+        //move stage color to downwards
+        stage -> move_stagecolor_down(row);
+        row = row - BLOCK_HEIGHT;
+      }
+    }
     // make new block to fall
     Btype type = get_blocktype();
     block = new Block(type, renderer);

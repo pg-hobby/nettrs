@@ -26,10 +26,10 @@ void Stage::render_stage(SDL_Renderer *ren){
   }
 }
 
-void Stage::move_stagecolor_down() {
+void Stage::move_stagecolor_down(int row) {
   int x = 0;
   int y = 0;
-  for (y = STAGE_HEIGHT-BLOCK_HEIGHT; y >= 0; y -= BLOCK_HEIGHT) {
+  for (y = row; y >= 0; y -= BLOCK_HEIGHT) {
     for (x = 0; x < STAGE_WIDTH; x += BLOCK_WIDTH) {
       grid[x][y]       = grid[x][y - BLOCK_HEIGHT];
       grid_color[x][y] = grid_color[x][y - BLOCK_HEIGHT];
@@ -40,7 +40,7 @@ void Stage::move_stagecolor_down() {
 bool Stage::check_row(int row) {
   int i = 0;
   for (i = 0; i < STAGE_WIDTH; i += BLOCK_WIDTH) {
-    if (!grid[i][row - BLOCK_HEIGHT])
+    if (!grid[i][row])
       return false;
   }
   return true;
