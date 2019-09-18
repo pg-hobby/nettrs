@@ -23,11 +23,11 @@
 
 enum Btype{
   BLOCK_I,
+  BLOCK_O,
+  BLOCK_S,
+  BLOCK_Z,
   BLOCK_J,
   BLOCK_L,
-  BLOCK_O,
-  BLOCK_Z,
-  BLOCK_S,
   BLOCK_T,
   BLOCK_SI,
   BLOCK_SL,
