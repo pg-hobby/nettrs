@@ -50,6 +50,7 @@ void Game::handleEvents() {
     case SDL_KEYDOWN: {
       switch (event.key.keysym.sym) {
         //move block to right
+        case SDLK_d:
         case SDLK_RIGHT: {
           bool status = false;
           for (int i = 0; i < BLOCK_COUNT && !status; i++) {
@@ -61,6 +62,7 @@ void Game::handleEvents() {
           break;
         }
         //move block to left
+        case SDLK_a:
         case SDLK_LEFT: {
           bool status = false;
           for (int i = 0; i < BLOCK_COUNT && !status; i++) {
@@ -72,6 +74,7 @@ void Game::handleEvents() {
           break;
         }
         //move block down fast
+        case SDLK_s:
         case SDLK_DOWN: {
           bool status = false;
           for (int i = 0; i < BLOCK_COUNT && !status; i++) {
@@ -83,7 +86,7 @@ void Game::handleEvents() {
           break;
         }
         // rotate block
-        case SDLK_SPACE: {
+        case SDLK_z: {
           bool status = false;
           int x_axis = block -> get_block_x();
           int y_axis = block -> get_block_y();
@@ -92,7 +95,19 @@ void Game::handleEvents() {
             int y = block -> get_block_y(i);
             status = stage -> get_grid_status(x_axis - y_axis + y, y_axis + x_axis - x);
           }
-          block -> rotate_block(status);
+          block -> rotate_block_left(status);
+          break;
+        }
+        case SDLK_x: {
+          bool status = false;
+          int x_axis = block -> get_block_x();
+          int y_axis = block -> get_block_y();
+          for (int i = 1; i < BLOCK_COUNT && !status; i++) {
+            int x = block -> get_block_x(i);
+            int y = block -> get_block_y(i);
+            status = stage -> get_grid_status(x_axis - y_axis + y, y_axis + x_axis - x);
+          }
+          block -> rotate_block_right(status);
           break;
         }
         //do nothing

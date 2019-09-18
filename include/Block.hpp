@@ -54,7 +54,8 @@ class Block{
     void move_block_right(bool is_occupied);
     void move_block_left(bool is_occupied);
     void move_block_downfast(bool is_occupied);
-    void rotate_block(bool is_occupied);
+    void rotate_block_right(bool is_occupied);
+    void rotate_block_left(bool is_occupied);
     bool Dead() {
       return isDead;
     }

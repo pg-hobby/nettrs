@@ -77,7 +77,25 @@ void Block::move_block_downfast(bool status) {
   }
 }
 
-void Block::rotate_block(bool status) {
+void Block::rotate_block_right(bool status) {
+  if (status) {
+    debug("is occupied");
+    return;
+  }
+  if (blocktype == BLOCK_O) {
+    return;
+  }
+  int x_axis = blocks[0].x;
+  int y_axis = blocks[0].y;
+  for (int i = 1; i < BLOCK_COUNT ; i++) {
+    int x_vec = blocks[i].x - x_axis;
+    int y_vec = blocks[i].y - y_axis;
+    blocks[i].x = x_axis - y_vec;
+    blocks[i].y = y_axis + x_vec;
+  }
+}
+
+void Block::rotate_block_left(bool status) {
   if (status) {
     debug("is occupied");
     return;
