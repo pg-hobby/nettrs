@@ -84,7 +84,15 @@ void Game::handleEvents() {
         }
         // rotate block
         case SDLK_SPACE: {
-          block -> rotate_block();
+          bool status = false;
+          int x_axis = block -> get_block_x();
+          int y_axis = block -> get_block_y();
+          for (int i = 1; i < BLOCK_COUNT && !status; i++) {
+            int x = block -> get_block_x(i);
+            int y = block -> get_block_y(i);
+            status = stage -> get_grid_status(x_axis - y_axis + y, y_axis + x_axis - x);
+          }
+          block -> rotate_block(status);
           break;
         }
         //do nothing

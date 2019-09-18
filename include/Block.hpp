@@ -54,11 +54,13 @@ class Block{
     void move_block_right(bool is_occupied);
     void move_block_left(bool is_occupied);
     void move_block_downfast(bool is_occupied);
-    void rotate_block();
+    void rotate_block(bool is_occupied);
     bool Dead() {
       return isDead;
     }
     void render_block(SDL_Renderer *ren);
+    int get_block_x();
+    int get_block_y();
     int get_block_x(int i);
     int get_block_y(int i);
     SDL_Texture *get_block_texture() {
@@ -72,6 +74,7 @@ class Block{
     bool isDead = false;
     SDL_Rect blocks[BLOCK_COUNT];
     SDL_Texture *block_texture;
+    Btype blocktype;
 
     void init_block(int x, int y, int w, int h);
     void set_block(int x, int y, int w, int h, Btype type, SDL_Renderer *ren);

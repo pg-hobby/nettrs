@@ -6,29 +6,30 @@
  * --------------------------------------------------------------
  * BLOCK:I  BLOCK:O  BLOCK:S  BLOCK:Z  BLOCK:J  BLOCK:L  BLOCK:T
  * --------------------------------------------------------------
- * □■□□ □□□□ □■■□ ■■□□ □■□□ □■□□ □■□□
- * □■□□ □■■□ ■■□□ □■■□ □■□□ □■□□ ■■■□
- * □■□□ □■■□ □□□□ □□□□ ■■□□ □■■□ □□□□
+ * □■□□ □□□□ □□□□ □□□□ □■□□ □■□□ □■□□
+ * □●□□ □■■□ □●■□ ■■□□ □●□□ □●□□ ■●■□
+ * □■□□ □■■□ ■■□□ □●■□ ■■□□ □■■□ □□□□
  * □■□□ □□□□ □□□□ □□□□ □□□□ □□□□ □□□□
  *
  * --------------------------------------------------------------
  * BLOCK:i  BLOCK:l
  * --------------------------------------------------------------
  * □■□□ □□□□
- * □■□□ □■□□
- * □■□□ □■■□
+ * □●□□ □■□□
+ * □■□□ □●■□
  * □□□□ □□□□
  */
 static const mino blockinfo[] = {
-  {'I', TEXTURE_LIGHTBLUE_PATH,  {{1, 0}, {1, 1}, {1, 2}, {1, 3}}},
+/* NAME COLOR                     AXIS    LOCAL1  LOCAL2  LOCAL3   */
+  {'I', TEXTURE_LIGHTBLUE_PATH,  {{1, 1}, {1, 0}, {1, 2}, {1, 3}}},
   {'O', TEXTURE_YELLOW_PATH,     {{1, 1}, {2, 1}, {1, 2}, {2, 2}}},
-  {'S', TEXTURE_GREEN_PATH,      {{1, 0}, {2, 0}, {0, 1}, {1, 1}}},
-  {'Z', TEXTURE_RED_PATH,        {{0, 0}, {1, 0}, {1, 1}, {2, 1}}},
-  {'J', TEXTURE_BLUE_PATH,       {{1, 0}, {1, 1}, {0, 2}, {1, 2}}},
-  {'L', TEXTURE_ORANGE_PATH,     {{1, 0}, {1, 1}, {1, 2}, {2, 2}}},
-  {'T', TEXTURE_PURPLE_PATH,     {{1, 0}, {0, 1}, {1, 1}, {2, 1}}},
-  {'i', TEXTURE_LIGHTGREEN_PATH, {{1, 0}, {1, 1}, {1, 2}, {1, 2}}},
-  {'l', TEXTURE_PINK_PATH,       {{1, 1}, {1, 2}, {2, 2}, {2, 2}}},
+  {'S', TEXTURE_GREEN_PATH,      {{1, 1}, {2, 1}, {0, 2}, {1, 2}}},
+  {'Z', TEXTURE_RED_PATH,        {{1, 2}, {0, 1}, {1, 1}, {2, 2}}},
+  {'J', TEXTURE_BLUE_PATH,       {{1, 1}, {1, 0}, {0, 2}, {1, 2}}},
+  {'L', TEXTURE_ORANGE_PATH,     {{1, 1}, {1, 0}, {1, 2}, {2, 2}}},
+  {'T', TEXTURE_PURPLE_PATH,     {{1, 1}, {0, 1}, {1, 0}, {2, 1}}},
+  {'i', TEXTURE_LIGHTGREEN_PATH, {{1, 1}, {1, 0}, {1, 2}, {1, 2}}},
+  {'l', TEXTURE_PINK_PATH,       {{1, 2}, {1, 1}, {2, 2}, {2, 2}}},
 };
 
 Block::Block(Btype btype, SDL_Renderer *ren) {
@@ -76,10 +77,30 @@ void Block::move_block_downfast(bool status) {
   }
 }
 
-void Block::rotate_block() {
-  debug("rotate");
+void Block::rotate_block(bool status) {
+  if (status) {
+    debug("is occupied");
+    return;
+  }
+  if (blocktype == BLOCK_O) {
+    return;
+  }
+  int x_axis = blocks[0].x;
+  int y_axis = blocks[0].y;
+  for (int i = 1; i < BLOCK_COUNT ; i++) {
+    int x_vec = blocks[i].x - x_axis;
+    int y_vec = blocks[i].y - y_axis;
+    blocks[i].x = x_axis + y_vec;
+    blocks[i].y = y_axis - x_vec;
+  }
 }
 
+int Block::get_block_x() {
+  return blocks[0].x;
+}
+int Block::get_block_y() {
+  return blocks[0].y;
+}
 int Block::get_block_x(int i) {
   return blocks[i].x;
 }
@@ -103,6 +124,7 @@ void Block::init_block(int x, int y, int w, int h){
 
 void Block::set_block(int x, int y, int w, int h, Btype type, SDL_Renderer *ren){
   init_block(x, y, w, h);
+  blocktype = type;
   block_texture = TextureManager::LoadTexture(blockinfo[type].path, ren);
 
   for(int i = 0; i < BLOCK_COUNT; i++) {
