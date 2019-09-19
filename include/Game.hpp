@@ -19,6 +19,13 @@
 #define debug_game(str) do { } while (0)
 #endif
 
+enum GameStatus {
+  TITLE,
+  RUNNING,
+  PAUSING,
+  GAMEOVER,
+};
+
 class Game{
   public:
     SDL_Window *window;
@@ -39,9 +46,14 @@ class Game{
     bool runnig() {
       return isRunning;
     }
+    int get_status() {
+      return gamestatus;
+    }
 
   private:
+    /* FIXME: Using gamestatus instead of isRunning */
     bool isRunning;
+    GameStatus gamestatus;
     Uint32 gravity;
     Uint32 BlockStart;
 };

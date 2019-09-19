@@ -20,6 +20,9 @@ int main(int argc, const char *argv[]) {
     //update all object eg postioning etc
     game -> update();
     //render change to display
+    if (game -> get_status() == GAMEOVER)
+      break;
+
     game -> render();
 
     frameTime = SDL_GetTicks() - frameStart;

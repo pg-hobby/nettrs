@@ -31,6 +31,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height,
     }
 
     isRunning = true;
+    gamestatus = RUNNING;
     stage = new Stage();
     gravity = STAGE_GRAVITY;
     block = new Block(type, renderer);
@@ -126,6 +127,18 @@ void Game::handleEvents() {
 }
 
 void Game::update(){
+  bool occupied = false;
+  //check gameover
+  for (int i = 0; i < BLOCK_COUNT && !occupied; i++) {
+    int x = block -> get_block_x(i);
+    int y = block -> get_block_y(i);
+    occupied = stage -> get_grid_status(x, y);
+  }
+  if (occupied) {
+    debug("GAME OVER");
+    gamestatus = GAMEOVER;
+    return;
+  }
   //check if block is falling or stopped
   if (block -> Dead()) {
     //change grid color if occupied
