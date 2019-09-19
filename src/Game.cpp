@@ -88,6 +88,21 @@ void Game::handleEvents() {
           block -> move_block_downfast(status);
           break;
         }
+        //move block down fast
+        case SDLK_w:
+        case SDLK_UP: {
+          while (!block -> Dead()) {
+            bool status = false;
+            BlockStart = SDL_GetTicks();
+            for (int i = 0; i < BLOCK_COUNT && !status; i++) {
+              int x = block -> get_block_x(i);
+              int y = block -> get_block_y(i);
+              status = stage -> get_grid_status(x, y + BLOCK_HEIGHT);
+            }
+            block -> move_block_downfast(status);
+          }
+          break;
+        }
         // rotate block
         case SDLK_z: {
           bool status = false;
