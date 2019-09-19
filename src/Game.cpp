@@ -142,7 +142,7 @@ void Game::update(){
       if (stage -> check_row(row)) {
         //move stage color to downwards
         stage -> move_stagecolor_down(row);
-        row = row - BLOCK_HEIGHT;
+        row += BLOCK_HEIGHT;
       }
     }
     // make new block to fall
