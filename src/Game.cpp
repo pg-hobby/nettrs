@@ -32,6 +32,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height,
 
     isRunning = true;
     stage = new Stage();
+    gravity = STAGE_GRAVITY;
     block = new Block(type, renderer);
   }
   else {
@@ -77,6 +78,7 @@ void Game::handleEvents() {
         case SDLK_s:
         case SDLK_DOWN: {
           bool status = false;
+          BlockStart = SDL_GetTicks();
           for (int i = 0; i < BLOCK_COUNT && !status; i++) {
             int x = block -> get_block_x(i);
             int y = block -> get_block_y(i);
@@ -148,6 +150,18 @@ void Game::update(){
     // make new block to fall
     Btype type = get_blocktype();
     block = new Block(type, renderer);
+    BlockStart = SDL_GetTicks();
+  } else {
+    if ((SDL_GetTicks() - BlockStart) > gravity) {
+      BlockStart = SDL_GetTicks();
+      bool status = false;
+      for (int i = 0; i < BLOCK_COUNT && !status; i++) {
+        int x = block -> get_block_x(i);
+        int y = block -> get_block_y(i);
+        status = stage -> get_grid_status(x, y + BLOCK_HEIGHT);
+      }
+      block -> move_block_downfast(status);
+    }
   }
 }
 

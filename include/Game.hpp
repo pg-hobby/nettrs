@@ -42,6 +42,8 @@ class Game{
 
   private:
     bool isRunning;
+    Uint32 gravity;
+    Uint32 BlockStart;
 };
 
 

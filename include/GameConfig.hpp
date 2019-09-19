@@ -7,7 +7,7 @@
 //stage configure
 #define STAGE_HEIGHT  500
 #define STAGE_WIDTH   500
-#define STAGE_GRAVITY 50
+#define STAGE_GRAVITY 1000
 
 // blocks configure
 #define BLOCK_HEIGHT 50
