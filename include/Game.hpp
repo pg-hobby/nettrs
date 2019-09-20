@@ -19,6 +19,11 @@
 #define debug_game(str) do { } while (0)
 #endif
 
+#define SINGLELINE_SCORE  40
+#define DOUBLELINE_SCORE  100
+#define TRIPLELINE_SCORE  300
+#define TETRISLINE_SCORE  1200
+
 enum GameStatus {
   TITLE,
   RUNNING,
@@ -53,9 +58,12 @@ class Game{
   private:
     /* FIXME: Using gamestatus instead of isRunning */
     bool isRunning;
+    Uint32  gamescore;
     GameStatus gamestatus;
     Uint32 gravity;
     Uint32 BlockStart;
+
+    int calc_score(int linenums, bool isTspin);
 };
 
 

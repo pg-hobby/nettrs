@@ -34,6 +34,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height,
     gamestatus = RUNNING;
     stage = new Stage();
     gravity = STAGE_GRAVITY;
+    gamescore = 0;
     block = new Block(type, renderer);
   }
   else {
@@ -164,6 +165,7 @@ void Game::update(){
     }
     delete block; //destroy block instance
     //check if row is occupied
+    Uint32 lnums = 0;
     int y = block -> get_block_y();
     int radius = BLOCK_HEIGHT * (BLOCK_COUNT / 2);
     int upper = std::max(0, y - radius);
@@ -173,7 +175,13 @@ void Game::update(){
         //move stage color to downwards
         stage -> move_stagecolor_down(row);
         row += BLOCK_HEIGHT;
+        lnums++;
       }
+    }
+    if (lnums) {
+      calc_score(lnums, false);
+      //FIXME: LevelUP routine.
+      gravity /= 2;
     }
     // make new block to fall
     Btype type = get_blocktype();
@@ -233,4 +241,31 @@ Btype Game::get_blocktype() {
   btmp = blocktype.top();
   blocktype.pop();
   return btmp;
+}
+
+int Game::calc_score(int linenums, bool isTspin) {
+  int err = 0;
+  int bonus = 1;
+  if (isTspin)
+    bonus++;
+
+  switch (linenums) {
+    case 1:
+      gamescore += (SINGLELINE_SCORE * bonus);
+      break;
+    case 2:
+      gamescore += (DOUBLELINE_SCORE * bonus);
+      break;
+    case 3:
+      gamescore += (TRIPLELINE_SCORE * bonus);
+      break;
+    case 4:
+      gamescore += (TETRISLINE_SCORE * bonus);
+      break;
+    default:
+      err = linenums;
+  }
+
+  std::cout << "score:" << gamescore << std::endl;
+  return err;
 }
