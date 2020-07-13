@@ -31,4 +31,5 @@ RUN apt-get -y install \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN useradd -ms /bin/bash nettrs
 CMD ["/bin/sh"]

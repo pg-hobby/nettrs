@@ -16,7 +16,7 @@ $ docker build -t nettrs .
 ```
 2. Execute python script in Docker Container
 ```shell
-$ docker run --rm -u `id -u` -v $PWD:/work -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY --name nettrs -it nettrs python3 Nettrs.py
+$ docker run --rm -u nettrs -v $PWD:/work:ro -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY --name nettrs -it nettrs python3 Nettrs.py
 ```
 
 関数の中身何も実装シてないからまだ動かないヨ！！
