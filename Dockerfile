@@ -27,6 +27,8 @@ RUN apt-get -y install \
         libgd3 \
         libgd-dev && \
     pip3 install numpy \
-        pygame
+        pygame && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 CMD ["/bin/sh"]
