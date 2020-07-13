@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 LABEL maintainer "LeavaTail <starbow.duster@gmail.com>"
 
 # CMake woring directory
-WORKDIR /work/build
+WORKDIR /work
 
 # timezone setting
 ENV DEBIAN_FRONTEND=noninteractive
