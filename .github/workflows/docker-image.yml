@@ -18,3 +18,5 @@ jobs:
       run: docker build -t nettrs .
     - name: Check if container install pygame
       run: docker run --rm -v $PWD:/work --name nettrs -i nettrs pip3 show pygame
+    - name: Check if container install numpy
+      run: docker run --rm -v $PWD:/work --name nettrs -i nettrs pip3 show numpy
