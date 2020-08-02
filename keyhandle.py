@@ -1,14 +1,15 @@
 from pygame.locals import * 
+from pygase import Client
 
-def key_handle(key,block,group):
+def key_handle(key):
     if key==K_SPACE:
-        block.move_dfast()
+        client.dispatch_event("K_SPACE")
     elif key==K_LEFT:
-        block.move_left()
+        client.dispatch_event("K_LEFT")
     elif key==K_RIGHT:
-        block.move_right()
+        client.dispatch_event("K_RIGHT")
     elif key==K_DOWN:
-        block.move_down()
+        client.dispatch_event("K_DOWN")
     else:
         print("ERROR")
 
