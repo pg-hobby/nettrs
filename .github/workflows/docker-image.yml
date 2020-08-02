@@ -16,9 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build -t nettrs .
-    - name: Execute Docker Container
-      run: docker run -it -d --rm -v $PWD:/work --name nettrs nettrs
-    - name: Generate Makefile inside Docker Container
-      run: docker exec nettrs cmake ..
-    - name: Build nettrs inside Docker Container
-      run: docker exec nettrs make
+    - name: Check if container install pygame
+      run: docker run --rm -v $PWD:/work --name nettrs -i nettrs pip3 show pygame
+    - name: Check if container install numpy
+      run: docker run --rm -v $PWD:/work --name nettrs -i nettrs pip3 show numpy
