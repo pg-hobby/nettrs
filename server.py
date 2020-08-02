@@ -1,8 +1,8 @@
 import math
 from pygase import Gamestate, Backend
-from keyhandle import key_handle
 from Block import Block
-
+from pygame.locals import * 
+import pygame
 
 Stage = pygame.sprite.RenderUpdates()
 block = Block("test.png",150,0,Stage)
@@ -15,21 +15,25 @@ def time_step(game_state,dt):
     ## update gamestatus by time
     pass
 
-def key_space():
+def key_space(game_state):
+    game_state.block.move_dfast()
     print("space")
 
-def key_down():
+def key_down(game_state):
+    game_state.block.move_down()
     print("down")
 
-def key_left():
+def key_left(game_state):
+    game_state.block.move_left()
     print("left")
 
-def key_right():
+def key_right(game_state):
+    game_state.block.move_right()
     print("right")
 
-def key_quit():
+def key_quit(game_state):
     print("quit")
-
+    pass
 
 backend = Backend(
         initial_game_state,
