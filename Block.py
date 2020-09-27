@@ -49,3 +49,8 @@ class Block():
         else:
             self.Dstage = nextblk
             return self.Sstage, self.Dstage
+
+    def move_dfast(self):
+        while(self.isdead == False):
+          self.move_down()
+        return self.Sstage, np.zeros_like(self.Sstage)

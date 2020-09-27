@@ -2,7 +2,7 @@ from pygame.locals import *
 
 def key_handle(key, block):
     if key == K_SPACE:
-        pass
+        return block.move_dfast()
     elif key == K_LEFT:
         return block.move_left()
     elif key == K_RIGHT:
