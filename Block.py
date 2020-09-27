@@ -8,33 +8,44 @@ class Block():
         self.isdead = False
 
     def move_left(self):
-        if np.where(self.Dstage == 1)[1][0] == 0:
-            return self.Sstage + self.Dstage
-        self.Dstage = np.roll(self.Dstage, -1, axis=1)
-        tmp = self.Sstage + self.Dstage
-        if np.any(tmp == 2):
-            self.Dstage = np.roll(self.Dstage, 1, axis=1)
-        return self.Sstage + self.Dstage
+        nextblk = np.roll(self.Dstage, -1, axis=1)
+        # check wall
+        if np.where(nextblk == 1)[1][0] == 7:
+            return self.Sstage, self.Dstage
+        # check current block
+        elif np.any(nextblk + self.Sstage == 2):
+            return self.Sstage, self.Dstage
+        # can move
+        else:
+            self.Dstage = nextblk
+            return self.Sstage, self.Dstage
 
     def move_right(self):
-        if np.where(self.Dstage == 1)[1][0] == 7:
-            return self.Sstage + self.Dstage
-        self.Dstage = np.roll(self.Dstage, 1, axis=1)
-        tmp = self.Sstage + self.Dstage
-        if np.any(tmp == 2):
-            self.Dstage = np.roll(self.Dstage, -1, axis=1)
-        return self.Sstage + self.Dstage
+        nextblk = np.roll(self.Dstage, 1, axis=1)
+        # check wall
+        if np.where(nextblk == 1)[1][0] == 0:
+            return self.Sstage, self.Dstage
+        # check current block
+        elif np.any(nextblk + self.Sstage == 2):
+            return self.Sstage, self.Dstage
+        # can move
+        else:
+            self.Dstage = nextblk
+            return self.Sstage, self.Dstage
 
     def move_down(self):
-        if np.where(self.Dstage == 1)[0][0] == 7:
+        nextblk = np.roll(self.Dstage, 1, axis=0)
+        # check wall
+        if np.where(nextblk == 1)[0][0] == 0:
             self.isdead = True
             self.Sstage += self.Dstage
-            return self.Sstage
-        self.Dstage = np.roll(self.Dstage, 1, axis=0)
-        tmp = self.Sstage + self.Dstage
-        if np.any(tmp == 2):
-            self.Dstage = np.roll(self.Dstage, -1, axis=0)
+            return self.Sstage, np.zeros_like(self.Sstage)
+        # check current block
+        elif np.any(nextblk + self.Sstage == 2):
             self.isdead = True
             self.Sstage += self.Dstage
-            return self.Sstage
-        return self.Sstage + self.Dstage
+            return self.Sstage, np.zeros_like(self.Sstage)
+        # can move
+        else:
+            self.Dstage = nextblk
+            return self.Sstage, self.Dstage

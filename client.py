@@ -28,7 +28,7 @@ if __name__ == "__main__":
                     sys.exit()
                 elif event.type == KEYDOWN:
                     s.sendall(pickle.dumps(event.key))
-                    raw = s.recv(1024)
+                    raw = s.recv(2048)
                     if not raw:
                         break
                     data = pickle.loads(raw)
