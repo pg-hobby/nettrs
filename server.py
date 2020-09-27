@@ -7,8 +7,8 @@ from keyhandle import key_handle
 
 ip_address = "127.0.0.1"
 port = 5000
-sstage = np.zeros(64).reshape([8, 8])
-dstage = np.zeros(64).reshape([8, 8])
+sstage = np.zeros(64).astype("int").reshape([8, 8])
+dstage = np.zeros(64).astype("int").reshape([8, 8])
 
 if __name__ == "__main__":
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
