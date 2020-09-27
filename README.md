@@ -1,6 +1,8 @@
 # nettrs
 ネットワーク対戦型テトリスを作りたい
 
+![demo](https://user-images.githubusercontent.com/33386353/94367078-2580b680-0117-11eb-870d-7240731f1ac1.gif)
+
 ## Usage
 ### Build with Host
 1. Install requirement package
