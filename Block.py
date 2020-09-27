@@ -9,8 +9,11 @@ class Block():
 
     def move_left(self):
         nextblk = np.roll(self.Dstage, -1, axis=1)
+        # Game over
+        if self.Sstage[0][0] == 1:
+            return np.zeros_like(self.Sstage), np.zeros_like(self.Sstage)
         # check wall
-        if np.where(nextblk == 1)[1][0] == 7:
+        elif np.where(nextblk == 1)[1][0] == 7:
             return self.Sstage, self.Dstage
         # check current block
         elif np.any(nextblk + self.Sstage == 2):
@@ -22,8 +25,11 @@ class Block():
 
     def move_right(self):
         nextblk = np.roll(self.Dstage, 1, axis=1)
+        # Game over
+        if self.Sstage[0][0] == 1:
+            return np.zeros_like(self.Sstage), np.zeros_like(self.Sstage)
         # check wall
-        if np.where(nextblk == 1)[1][0] == 0:
+        elif np.where(nextblk == 1)[1][0] == 0:
             return self.Sstage, self.Dstage
         # check current block
         elif np.any(nextblk + self.Sstage == 2):
@@ -35,8 +41,11 @@ class Block():
 
     def move_down(self):
         nextblk = np.roll(self.Dstage, 1, axis=0)
+        # Game over
+        if self.Sstage[0][0] == 1:
+            return np.zeros_like(self.Sstage), np.zeros_like(self.Sstage)
         # check wall
-        if np.where(nextblk == 1)[0][0] == 0:
+        elif np.where(nextblk == 1)[0][0] == 0:
             self.isdead = True
             self.Sstage += self.Dstage
             return self.Sstage, np.zeros_like(self.Sstage)
