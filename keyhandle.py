@@ -1,8 +1,8 @@
 from pygame.locals import * 
 
-def key_handle(key,block,group):
+def key_handle(key, block):
     if key==K_SPACE:
-        block.move_dfast()
+        pass
     elif key==K_LEFT:
         block.move_left()
     elif key==K_RIGHT:
