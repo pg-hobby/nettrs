@@ -1,30 +1,45 @@
 # nettrs
 ネットワーク対戦型テトリスを作りたい
 
-## 一人用のテトリスから
-### Build with Host
-1. buildディレクトリ作る
-2. cd ./build
-3. cmake ../
-4. make
+![demo](https://user-images.githubusercontent.com/33386353/94367078-2580b680-0117-11eb-870d-7240731f1ac1.gif)
 
-### Build with Docker
+## Usage
+### Build with Host
+1. Install requirement package
+2. Execute server in Docker Container
+3. Execute client in Docker Container
+
+### run with Docker
 1. Build Docker Image
 ```shell
 $ cd $<PROJECT_TOPDIR>
 $ docker build -t nettrs .
 ```
-2. Start Docker Container
+2. Execute server in Docker Container
 ```shell
-$ docker run -it -d --rm -v $PWD:/work --name nettrs nettrs
+$ docker run --rm -u nettrs -v $PWD:/work:ro -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY --name nettrs -it nettrs python3 server.py
 ```
-3. Generate Makefile inside Docker Container
+3. Execute client in Docker Container
 ```shell
-$ docker exec nettrs cmake ..
-```
-4. Build nettrs inside Docker Container
-```shell
-$ docker exec nettrs make
+$ docker run --rm -u nettrs -v $PWD:/work:ro -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY --name nettrs -it nettrs python3 client.py
 ```
 
-関数の中身何も実装シてないからまだ動かないヨ！！
+### run with Docker-Compose
+1. Build Docker Image to use Docker-Compose
+```shell
+$ cd $<PROJECT_TOPDIR>
+$ docker-compose up -d
+```
+2. Execute server in Docker Container
+```shell
+$ docker-compose exec server python3 server.py
+```
+3. Execute client in Docker Container
+```shell
+$ docker-compose exec client1 python3 client.py
+```
+* Notice: You can switch `client1` to `client2`
+
+## Requirement
+* [numpy](https://numpy.org/)
+* [pygame](https://www.pygame.org/news)

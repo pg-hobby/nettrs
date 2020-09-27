@@ -18,7 +18,3 @@ jobs:
       run: docker build -t nettrs .
     - name: Execute Docker Container
       run: docker run -it -d --rm -v $PWD:/work --name nettrs nettrs
-    - name: Generate Makefile inside Docker Container
-      run: docker exec nettrs cmake ..
-    - name: Build nettrs inside Docker Container
-      run: docker exec nettrs make
