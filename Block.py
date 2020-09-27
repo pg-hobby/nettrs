@@ -9,18 +9,32 @@ class Block():
 
     def move_left(self):
         if np.where(self.Dstage == 1)[1][0] == 0:
-            return
+            return self.Sstage + self.Dstage
         self.Dstage = np.roll(self.Dstage, -1, axis=1)
-        print(self.Dstage)
+        tmp = self.Sstage + self.Dstage
+        if np.any(tmp == 2):
+            self.Dstage = np.roll(self.Dstage, 1, axis=1)
+        return self.Sstage + self.Dstage
 
     def move_right(self):
         if np.where(self.Dstage == 1)[1][0] == 7:
-            return
+            return self.Sstage + self.Dstage
         self.Dstage = np.roll(self.Dstage, 1, axis=1)
-        print(self.Dstage)
+        tmp = self.Sstage + self.Dstage
+        if np.any(tmp == 2):
+            self.Dstage = np.roll(self.Dstage, -1, axis=1)
+        return self.Sstage + self.Dstage
 
     def move_down(self):
-            return
         if np.where(self.Dstage == 1)[0][0] == 7:
+            self.isdead = True
+            self.Sstage += self.Dstage
+            return self.Sstage
         self.Dstage = np.roll(self.Dstage, 1, axis=0)
-        print(self.Dstage)
+        tmp = self.Sstage + self.Dstage
+        if np.any(tmp == 2):
+            self.Dstage = np.roll(self.Dstage, -1, axis=0)
+            self.isdead = True
+            self.Sstage += self.Dstage
+            return self.Sstage
+        return self.Sstage + self.Dstage

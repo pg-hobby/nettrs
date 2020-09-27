@@ -23,5 +23,9 @@ if __name__ == "__main__":
                     if not raw:
                         break
                     data = pickle.loads(raw)
-                    key_handle(data, blk)
-                    conn.sendall(pickle.dumps(data))
+                    stage = key_handle(data, blk)
+                    print(stage)
+                    if blk.isdead == True:
+                        del blk
+                        blk = Block(stage)
+                    conn.sendall(pickle.dumps(stage))
