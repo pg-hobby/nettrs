@@ -9,6 +9,8 @@ def key_handle(key, block):
         return block.move_right()
     elif key == K_DOWN:
         return block.move_down()
+    elif key == -1:
+	    return block.Sstage, block.Dstage
     else:
         print("Invalid key")
         return block.Sstage, block.Dstage

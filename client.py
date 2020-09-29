@@ -29,6 +29,15 @@ if __name__ == "__main__":
         s.connect((server_ip, port))
         while (1):
             clock.tick(30)
+            s.sendall(pickle.dumps(-1))
+            raw = s.recv(2048)
+            if not raw:
+                break
+            sstage,dstage = pickle.loads(raw)
+            stage = dstage + np.multiply(sstage, 2)
+            surface = pygame.surfarray.make_surface(colors[stage.T])
+            surface = pygame.transform.scale(surface, (400, 400))
+
             # イベント処理
             for event in pygame.event.get():
                 if event.type == QUIT:  # 閉じるボタンが押されたら終了
