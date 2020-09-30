@@ -8,14 +8,17 @@ from keyhandle import key_handle
 
 ip_address = "127.0.0.1"
 port = 5000
-def Check_Stage(Sstage):
+sstage = np.zeros(64).astype("int").reshape([8, 8])
+
+def Check_Stage():
+    global sstage
     is_full = False
-    if np.all(Sstage[7] == 1):
+    if np.all(sstage[7] == 1):
         is_full = True
     return is_full
 
 def threaded_client(conn):
-    sstage = np.zeros(64).astype("int").reshape([8, 8])
+    global sstage
     dstage = np.zeros(64).astype("int").reshape([8, 8])
     with conn:
         blk = Block(sstage)
@@ -28,10 +31,11 @@ def threaded_client(conn):
             print(sstage + dstage)
             if blk.isdead == True:
                 del blk
-                if Check_Stage(sstage):
-                    sstage = np.roll(sstage, 1, axis=0)
-                    sstage[0] = np.zeros(8)
                 blk = Block(sstage)
+            if Check_Stage():
+                for i in reversed(range(sstage.shape[0] - 1)):
+                    sstage[i + 1] = sstage[i]
+                sstage[0] = np.zeros(8)
             conn.sendall(pickle.dumps([sstage, dstage]))
 
 
