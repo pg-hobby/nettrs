@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
 import os
+import time
 import socket
 import pickle
 from _thread import *
@@ -10,6 +11,7 @@ from keyhandle import key_handle
 ip_address = "127.0.0.1"
 port = 5000
 sstage = np.zeros(128).astype("int").reshape([8, 16])
+wait_flag = True
 
 def Check_Stage(sstagep):
     is_full = False
@@ -18,9 +20,12 @@ def Check_Stage(sstagep):
     return is_full
 
 def threaded_client(conn, player):
+    global wait_flag
     global sstage
     sstagep = np.zeros(64).astype("int").reshape([8, 8])
     dstage = np.zeros(64).astype("int").reshape([8, 8])
+    while wait_flag:
+        time.sleep(1)
     with conn:
         conn.sendall(pickle.dumps(player))
         blk = Block(sstagep)
@@ -31,13 +36,18 @@ def threaded_client(conn, player):
             data = pickle.loads(raw)
             sstagep,dstage = key_handle(data, blk)
             #print(sstagep + dstage)
-            if blk.isdead == True:
-                del blk
-                blk = Block(sstagep)
-            if Check_Stage(sstagep):
-                for i in reversed(range(sstagep.shape[0] - 1)):
-                    sstagep[i + 1] = sstagep[i]
-                sstagep[0] = np.zeros(8)
+            if blk.isGO == True:
+                sstagep = np.ones_like(sstagep)
+                dstage = np.zeros(64).astype("int").reshape([8, 8])
+            else:
+                if blk.isdead == True:
+                    # Gameover
+                    del blk
+                    blk = Block(sstagep)
+                if Check_Stage(sstagep):
+                    for i in reversed(range(sstagep.shape[0] - 1)):
+                        sstagep[i + 1] = sstagep[i]
+                    sstagep[0] = np.zeros(8)
             sstage[:, 8 * player: (8 * player) + 8] = sstagep
             print(sstage)
             conn.sendall(pickle.dumps([sstage, dstage]))
@@ -52,3 +62,5 @@ if __name__ == "__main__":
             print('Connected to: ' + addr[0] + ':' + str(addr[1]))
             start_new_thread(threaded_client, (conn, player))
             player += 1
+            if player == 2:
+                wait_flag = False

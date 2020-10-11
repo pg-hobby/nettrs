@@ -6,6 +6,9 @@ class Block():
         self.Dstage = np.zeros_like(Stage)
         self.Dstage[0, 0] = 1
         self.isdead = False
+        self.isGO = False
+        if self.Sstage[0][0] == 1:
+            self.isGO = True
 
     def move_left(self):
         nextblk = np.roll(self.Dstage, -1, axis=1)
@@ -41,11 +44,7 @@ class Block():
 
     def move_down(self):
         nextblk = np.roll(self.Dstage, 1, axis=0)
-        # Game over
-        if self.Sstage[0][0] == 1:
-            return np.zeros_like(self.Sstage), np.zeros_like(self.Sstage)
-        # check wall
-        elif np.where(nextblk == 1)[0][0] == 0:
+        if np.where(nextblk == 1)[0][0] == 0:
             self.isdead = True
             self.Sstage += self.Dstage
             return self.Sstage, np.zeros_like(self.Sstage)
