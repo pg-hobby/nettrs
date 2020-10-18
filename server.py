@@ -13,11 +13,12 @@ port = 5000
 sstage = np.zeros(128).astype("int").reshape([8, 16])
 wait_flag = True
 
-def Check_Stage(sstagep):
-    is_full = False
-    if np.all(sstagep[7] == 1):
-        is_full = True
-    return is_full
+def Check_Stage(sstagep, full_array, n):
+    if np.all(sstagep[n] == 1):
+        full_array.append(n)
+    if (n > 0):
+        Check_Stage(sstagep, full_array, n - 1)
+    return full_array
 
 def threaded_client(conn, player):
     global wait_flag
@@ -40,14 +41,17 @@ def threaded_client(conn, player):
                 sstagep = np.ones_like(sstagep)
                 dstage = np.zeros(64).astype("int").reshape([8, 8])
             else:
+                full_array = []
+                full_array = Check_Stage(sstagep, full_array, sstagep.shape[1] - 1)
                 if blk.isdead == True:
                     # Gameover
                     del blk
                     blk = Block(sstagep)
-                if Check_Stage(sstagep):
-                    for i in reversed(range(sstagep.shape[0] - 1)):
-                        sstagep[i + 1] = sstagep[i]
-                    sstagep[0] = np.zeros(8)
+                if len(full_array):
+                    for i in reversed(full_array):
+                        for j in reversed(range(i)):
+                            sstagep[j + 1] = sstagep[j]
+                        sstagep[0] = np.zeros(8)
             sstage[:, 8 * player: (8 * player) + 8] = sstagep
             print(sstage)
             conn.sendall(pickle.dumps([sstage, dstage]))
