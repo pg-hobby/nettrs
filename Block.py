@@ -1,10 +1,15 @@
 import numpy as np
 
+shape = [
+    np.array([[1, 0], [0, 1]]),
+    np.array([[1, 1], [1, 0]])
+    ]
+
 class Block():
     def __init__(self, Stage):
         self.Sstage = Stage
         self.Dstage = np.zeros_like(Stage)
-        self.Dstage[0, 0] = 1
+        self.Dstage[0: 2, 0: 2] = shape[np.random.choice(len(shape))]
         self.isdead = False
         self.isGO = False
         if self.Sstage[0][0] == 1:
@@ -16,7 +21,7 @@ class Block():
         if self.Sstage[0][0] == 1:
             return np.zeros_like(self.Sstage), np.zeros_like(self.Sstage)
         # check wall
-        elif np.where(nextblk == 1)[1][0] == 7:
+        elif np.any(nextblk[:,7] == 1):
             return self.Sstage, self.Dstage
         # check current block
         elif np.any(nextblk + self.Sstage == 2):
@@ -32,7 +37,7 @@ class Block():
         if self.Sstage[0][0] == 1:
             return np.zeros_like(self.Sstage), np.zeros_like(self.Sstage)
         # check wall
-        elif np.where(nextblk == 1)[1][0] == 0:
+        elif np.any(nextblk[:,0] == 1):
             return self.Sstage, self.Dstage
         # check current block
         elif np.any(nextblk + self.Sstage == 2):
