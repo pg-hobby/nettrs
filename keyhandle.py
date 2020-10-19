@@ -2,6 +2,8 @@ from pygame.locals import *
 
 def key_handle(key, block):
     if key == K_SPACE:
+        return block.rotate()
+    elif key == K_UP:
         return block.move_dfast()
     elif key == K_LEFT:
         return block.move_left()
