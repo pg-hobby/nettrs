@@ -1,7 +1,7 @@
 # nettrs
 ネットワーク対戦型テトリスを作りたい
 
-![demo](https://user-images.githubusercontent.com/33386353/94367078-2580b680-0117-11eb-870d-7240731f1ac1.gif)
+![demo](https://user-images.githubusercontent.com/33386353/97178805-5a962c80-17db-11eb-8062-33f38cb67e8f.gif)
 
 ## Usage
 ### Build with Host
